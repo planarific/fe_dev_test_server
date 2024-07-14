@@ -2,6 +2,7 @@ mod data;
 mod model;
 
 use axum::routing::get;
+use dotenv;
 use std::net::SocketAddr;
 use std::thread;
 
@@ -11,6 +12,8 @@ use tower_http::{
     services::{ServeDir, ServeFile},
     trace::TraceLayer,
 };
+
+use tower_http::validate_request::ValidateRequestHeaderLayer;
 
 use crate::data::DATA;
 use crate::model::Model;
@@ -72,15 +75,20 @@ pub async fn main() {
 
     // print_data().await;
 
+    dotenv::dotenv().ok();
+
+    let token = dotenv::var("TOKEN").unwrap();
+
     let app = axum::Router::new()
         .fallback(fallback)
-        .route("/health", get(get_health))
         .route("/models", get(get_models))
         .route("/models/:id", get(get_models_id))
         .nest_service(
             "/",
             ServeDir::new("dist").not_found_service(ServeFile::new("dist/index.html")),
-        );
+        )
+        .route_layer(ValidateRequestHeaderLayer::bearer(&token))
+        .route("/health", get(get_health));
 
     //let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
 
