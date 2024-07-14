@@ -92,7 +92,7 @@ pub async fn main() {
 
     //let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
 
-    let host = [127, 0, 0, 1];
+    let host = [0, 0, 0, 0];
     let port = 3000;
     let addr = SocketAddr::from((host, port));
     let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
