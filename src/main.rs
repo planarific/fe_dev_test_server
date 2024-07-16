@@ -16,7 +16,7 @@ use tower_http::{
 use tower_http::validate_request::ValidateRequestHeaderLayer;
 
 use crate::data::DATA;
-use crate::model::Model;
+use crate::model::{Model, ModelListEntry};
 
 async fn print_data() {
     thread::spawn(move || {
@@ -38,10 +38,16 @@ pub async fn get_health() -> (axum::http::StatusCode, String) {
     (axum::http::StatusCode::OK, "Everything is OK".to_string())
 }
 
-pub async fn get_models() -> axum::Json<Vec<Model>> {
+pub async fn get_models() -> axum::Json<Vec<ModelListEntry>> {
     thread::spawn(move || {
         let data = DATA.lock().unwrap();
-        data.values().map(|m| m.clone()).collect::<Vec<_>>()
+        data.values()
+            .map(|m| ModelListEntry {
+                id: m.id,
+                thumbnail: m.thumbnail.clone(),
+                description: format!("{} {}", m.address1, m.postal_code),
+            })
+            .collect::<Vec<_>>()
     })
     .join()
     .unwrap()
@@ -81,14 +87,14 @@ pub async fn main() {
 
     let app = axum::Router::new()
         .fallback(fallback)
-        .route("/models", get(get_models))
-        .route("/models/:id", get(get_models_id))
+        .route("/v1/models", get(get_models))
+        .route("/v1/models/:id", get(get_models_id))
         .nest_service(
             "/",
             ServeDir::new("dist").not_found_service(ServeFile::new("dist/index.html")),
         )
         .route_layer(ValidateRequestHeaderLayer::bearer(&token))
-        .route("/health", get(get_health));
+        .route("/v1/health", get(get_health));
 
     //let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
 
