@@ -2,6 +2,24 @@
 
 The server implements an extremely simple API with the following endpoints:
 
+## /v1/health
+
+TOKEN required: **no**
+
+This is a simple healthcheck endpoint, to check whether the container is running.
+
+Example request:
+
+```
+curl -H "Authorization: Bearer SUPERSECRETTOKEN" https://fedevtest.azurewebsites.net/v1/health
+```
+
+Example response:
+
+```
+Everything is OK
+```
+
 ## /v1/models
 
 TOKEN required: **yes**
@@ -61,11 +79,20 @@ Example response:
     "id": 9,
     "description": "6 Regent Court GU19 5QD",
     "thumbnail": "/thumbs/9.png"
-  },
-  {
-    "id": 10,
-    "description": "Denewood SN10 3LL",
-    "thumbnail": "/thumbs/10.png"
   }
 ]
 ```
+
+## /v1/models/:id
+
+TOKEN required: **yes**
+
+Fetch detailed information about an individual "model" (building, dwelling). The parameter `id` should match one of the IDs returned by the `/v1/models/` endpoint.
+
+Example request:
+```
+ curl -H "Authorization: Bearer SUPERSECRETTOKEN" https://fedevtest.azurewebsites.net/v1/models
+```
+
+Example response:
+
