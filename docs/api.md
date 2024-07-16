@@ -91,8 +91,21 @@ Fetch detailed information about an individual "model" (building, dwelling). The
 
 Example request:
 ```
- curl -H "Authorization: Bearer SUPERSECRETTOKEN" https://fedevtest.azurewebsites.net/v1/models
+ curl -H "Authorization: Bearer SUPERSECRETTOKEN" https://fedevtest.azurewebsites.net/v1/models/1
 ```
 
 Example response:
 
+```
+
+{
+  "id": 1,
+  "address1": "24 Hesters Way Road",
+  "address2": "",
+  "city": "Cheltenham",
+  "state": "Gloucestershire",
+  "postal_code": "GL51 0DA",
+  "thumbnail": "/thumbs/1.png",
+  "model": "https://planarificfedevtest.blob.core.windows.net/models/house1.glb"
+}
+```

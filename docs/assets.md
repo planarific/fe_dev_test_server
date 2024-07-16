@@ -17,7 +17,7 @@ curl -H "Authorization: Bearer SUPERSECRETTOKEN" https://fedevtest.azurewebsites
 
 Example response:
 
-![Planarific logo](../dist/planarific.webp)
+![Planarific logo](../dist/planarific.png)
 
 ## /thumbs/X.png
 
