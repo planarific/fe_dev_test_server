@@ -29,3 +29,7 @@ Just a guide, but maybe something like:
 ![UI Wireframe](wireframe.png)
 
 
+## Palette
+
+Planarific orange is `#e47f63`.
+
