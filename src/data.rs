@@ -123,20 +123,5 @@ pub static DATA: Lazy<Mutex<HashMap<u32, Model>>> = Lazy::new(|| {
                 model: "https://planarificfedevtest.blob.core.windows.net/models/house9.glb".into(),
             },
         ),
-        (
-            10,
-            Model {
-                id: 10,
-                // "Denewood, Little Horton",SN10 3LL
-                address1: "Denewood".into(),
-                address2: "".into(),
-                city: "Little Horton".into(),
-                state: "West Yorkshire".into(),
-                postal_code: "SN10 3LL".into(),
-                thumbnail: "/thumbs/10.png".into(),
-                model: "https://planarificfedevtest.blob.core.windows.net/models/house10.glb"
-                    .into(),
-            },
-        ),
     ]))
 });
