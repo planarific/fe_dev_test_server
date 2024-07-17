@@ -5,7 +5,7 @@ This repository holds the source code for a simple API server, against which fro
 ## The task
 
 1. Develop a simple web UI application that combines both traditional 2D web UI elements, and 3D visualisations, following the [UX brief](docs/ux_brief.md). Your UI should utilise [the API provided by the test server](docs/api.md). In addition, the server offers some [static assets](docs/assets.md).
-2. Develop in github and gitlab and send us the URL, so we can discuss your code
+2. Develop in github or gitlab and send us the URL, so we can discuss your code
 3. **Either** deploy your UI somewhere on the internet, and send us the URL so we can play with it...
 4. ...**or** provide a Dockerfile in your repo, so that we can build a Docker container image and run it ourselves.
 
