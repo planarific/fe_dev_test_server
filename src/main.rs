@@ -1,14 +1,21 @@
 mod data;
+mod images;
 mod model;
 
+use axum::response::{IntoResponse, Redirect, Response};
 use axum::routing::get;
+
 use dotenv;
 use std::net::SocketAddr;
+use std::ops::Deref;
 use std::thread;
+use uuid::Uuid;
 
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
+use http::Method;
 use tower_http::{
+    cors::{Any, CorsLayer},
     services::{ServeDir, ServeFile},
     trace::TraceLayer,
 };
@@ -16,6 +23,7 @@ use tower_http::{
 use tower_http::validate_request::ValidateRequestHeaderLayer;
 
 use crate::data::DATA;
+use crate::images::obfuscate;
 use crate::model::{Model, ModelListEntry};
 
 async fn print_data() {
@@ -41,6 +49,7 @@ pub async fn get_health() -> (axum::http::StatusCode, String) {
 pub async fn get_models() -> axum::Json<Vec<ModelListEntry>> {
     thread::spawn(move || {
         let data = DATA.lock().unwrap();
+        let data = obfuscate(data.deref());
         data.values()
             .map(|m| ModelListEntry {
                 id: m.id,
@@ -59,6 +68,7 @@ pub async fn get_models_id(
 ) -> Result<axum::Json<Model>, axum::http::StatusCode> {
     thread::spawn(move || {
         let data = DATA.lock().unwrap();
+        let data = obfuscate(data.deref());
         match data.get(&id) {
             Some(model) => Ok(axum::Json(model.clone())),
             None => Err(axum::http::StatusCode::NOT_FOUND),
@@ -67,6 +77,17 @@ pub async fn get_models_id(
     .join()
     .unwrap()
     .into()
+}
+
+pub async fn get_thumbs_id(
+    axum::extract::Path(id): axum::extract::Path<String>,
+) -> impl IntoResponse {
+    let v: Vec<&str> = id.split(".png").collect();
+    let uuid = Uuid::parse_str(v[0]).unwrap();
+    match images::unhash_thumbnail(&uuid) {
+        Some(str) => Redirect::to(&str).into_response(),
+        None => axum::http::StatusCode::NOT_FOUND.into_response(),
+    }
 }
 
 #[tokio::main]
@@ -79,6 +100,12 @@ pub async fn main() {
         .with(tracing_subscriber::fmt::layer())
         .init();
 
+    let cors = CorsLayer::new()
+        // .allow_methods([Method::GET, Method::POST, Method::HEAD])
+        .allow_methods(Any)
+        .allow_headers(Any)
+        .allow_origin(Any);
+
     // print_data().await;
 
     dotenv::dotenv().ok();
@@ -89,12 +116,14 @@ pub async fn main() {
         .fallback(fallback)
         .route("/v1/models", get(get_models))
         .route("/v1/models/:id", get(get_models_id))
+        .route("/v1/thumbs/:id", get(get_thumbs_id))
         .nest_service(
             "/",
             ServeDir::new("dist").not_found_service(ServeFile::new("dist/index.html")),
         )
         .route_layer(ValidateRequestHeaderLayer::bearer(&token))
-        .route("/v1/health", get(get_health));
+        .route("/v1/health", get(get_health))
+        .layer(cors);
 
     //let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
 

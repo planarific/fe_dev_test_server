@@ -7,9 +7,9 @@ use std::sync::Mutex;
 pub static DATA: Lazy<Mutex<HashMap<u32, Model>>> = Lazy::new(|| {
     Mutex::new(HashMap::from([
         (
-            1,
+            19,
             Model {
-                id: 1,
+                id: 19,
                 address1: "24 Hesters Way Road".into(),
                 address2: "".into(),
                 city: "Cheltenham".into(),
@@ -20,9 +20,9 @@ pub static DATA: Lazy<Mutex<HashMap<u32, Model>>> = Lazy::new(|| {
             },
         ),
         (
-            2,
+            37,
             Model {
-                id: 2,
+                id: 37,
                 address1: "10 Beehive Court".into(),
                 address2: "".into(),
                 city: "Liversedge".into(),
@@ -33,9 +33,9 @@ pub static DATA: Lazy<Mutex<HashMap<u32, Model>>> = Lazy::new(|| {
             },
         ),
         (
-            3,
+            56,
             Model {
-                id: 3,
+                id: 56,
                 address1: "9 Vancouver Road".into(),
                 address2: "".into(),
                 city: "Worthing".into(),
@@ -46,9 +46,9 @@ pub static DATA: Lazy<Mutex<HashMap<u32, Model>>> = Lazy::new(|| {
             },
         ),
         (
-            4,
+            192,
             Model {
-                id: 4,
+                id: 192,
                 address1: "Hiram House, Spring Lane".into(),
                 address2: "".into(),
                 city: "Thrupp".into(),
@@ -59,9 +59,9 @@ pub static DATA: Lazy<Mutex<HashMap<u32, Model>>> = Lazy::new(|| {
             },
         ),
         (
-            5,
+            2364,
             Model {
-                id: 5,
+                id: 2364,
                 address1: "316B Cricklewood Lane".into(),
                 address2: "".into(),
                 city: "London".into(),
@@ -72,9 +72,9 @@ pub static DATA: Lazy<Mutex<HashMap<u32, Model>>> = Lazy::new(|| {
             },
         ),
         (
-            6,
+            112456,
             Model {
-                id: 6,
+                id: 112456,
                 address1: "41 Tresawls Avenue".into(),
                 address2: "".into(),
                 city: "Truro".into(),
@@ -85,9 +85,9 @@ pub static DATA: Lazy<Mutex<HashMap<u32, Model>>> = Lazy::new(|| {
             },
         ),
         (
-            7,
+            22397,
             Model {
-                id: 7,
+                id: 22397,
                 address1: "9 Venus Street".into(),
                 address2: "".into(),
                 city: "Congresbury".into(),
@@ -98,9 +98,9 @@ pub static DATA: Lazy<Mutex<HashMap<u32, Model>>> = Lazy::new(|| {
             },
         ),
         (
-            8,
+            50310,
             Model {
-                id: 8,
+                id: 50310,
                 address1: "4 Wheatley Grove".into(),
                 address2: "".into(),
                 city: "Walsall".into(),
@@ -111,9 +111,9 @@ pub static DATA: Lazy<Mutex<HashMap<u32, Model>>> = Lazy::new(|| {
             },
         ),
         (
-            9,
+            65535,
             Model {
-                id: 9,
+                id: 65535,
                 address1: "6 Regent Court".into(),
                 address2: "".into(),
                 city: "Bagshot".into(),
