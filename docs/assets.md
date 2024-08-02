@@ -19,18 +19,3 @@ Example response:
 
 ![Planarific logo](planarific.png)
 
-## /thumbs/X.png
-
-TOKEN required: **yes**
-
-Retrieve a thumbnail for the model with ID = `X`. The relative URL to the thumbnail for a particular model is returned by both the `/v1/models` and `/v1/models/:id` endpoints.
-
-Example request:
-
-```
-curl -H "Authorization: Bearer SUPERSECRETTOKEN" https://fedevtest.azurewebsites.net/thumbs/1.png
-```
-
-Example response:
-
-![Model thumbnail](../dist/thumbs/1.png)
