@@ -26,6 +26,8 @@ TOKEN required: **yes**
 
 Fetch a list of "models" (buildings, dwellings).
 
+*NB* you should not make any assumptions about the order in which models are returned, or infer any correlation between a model's ID and the path to its thumbnail image. These can and will change on a regular basis.
+
 Example request:
 ```
  curl -H "Authorization: Bearer SUPERSECRETTOKEN" https://fedevtest.azurewebsites.net/v1/models
@@ -88,6 +90,8 @@ Example response:
 TOKEN required: **yes**
 
 Fetch detailed information about an individual "model" (building, dwelling). The parameter `id` should match one of the IDs returned by the `/v1/models/` endpoint.
+
+*NB* you should not assume any correlation between a model's ID and the path to its thumbnail image or model data. These can and will change on a regular basis.
 
 Example request:
 ```
